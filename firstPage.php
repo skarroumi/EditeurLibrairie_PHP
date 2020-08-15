@@ -83,10 +83,10 @@
                      </div>
                    </div>
                  </div>
-               </div>'; 
-                   echo '<br>';
+               </div>';
+                  
+                   
                    break;
-				   
                 case 'Auteur' :
                   echo $data['Nom'].' '; 
                   echo $data['Prenom']." ";
@@ -115,9 +115,7 @@
                    </div>
                  </div>
                </div>';
-			   echo '<br>';
                    break;
-				   
                 case 'Commande':
                   echo 'commande :'.$data['CdeCommande'].' '; 
                  // echo $data['CdeLiraire'].'<br>';
@@ -145,9 +143,7 @@
                    </div>
                  </div>
                </div>';
-			   echo '<br>';
                    break;
-				   
                 case 'Edition' :
                  // echo $data['NumEdition'].; 
                   echo 'edition : '.$data['Annee'];
@@ -179,9 +175,7 @@
                    </div>
                  </div>
                </div>';
-			   echo '<br>';
                    break;
-				   
                /* case 'Adresse' :
                   echo $data['Rue'].', '; 
                   echo $data['Ville'].', ';
@@ -217,10 +211,9 @@
                    </div>
                  </div>
                </div>'; 
-			    echo '<br>';
                    break; 
                    
-                     
+                  ;       
    
    
             }
