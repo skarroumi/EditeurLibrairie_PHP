@@ -55,8 +55,6 @@
             switch($valeurChoisie)
             { 
                 case 'Livre' :  
-               //   $ife=if(isset($data['Prize']))//echo $data['Prize'].'<br>'k;
-                //  $elsee=else echo "ce livre n'a remporté aucun prix <br>";
                  echo $data['Titre'];
                 echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].'">
                  plus de infos
@@ -83,10 +81,10 @@
                      </div>
                    </div>
                  </div>
-               </div>';
-                  
-                   
+               </div>'; 
+                   echo '<br>';
                    break;
+				   
                 case 'Auteur' :
                   echo $data['Nom'].' '; 
                   echo $data['Prenom']." ";
@@ -115,7 +113,9 @@
                    </div>
                  </div>
                </div>';
+			   echo '<br>';
                    break;
+				   
                 case 'Commande':
                   echo 'commande :'.$data['CdeCommande'].' '; 
                  // echo $data['CdeLiraire'].'<br>';
@@ -143,7 +143,9 @@
                    </div>
                  </div>
                </div>';
+			   echo '<br>';
                    break;
+				   
                 case 'Edition' :
                  // echo $data['NumEdition'].; 
                   echo 'edition : '.$data['Annee'];
@@ -175,7 +177,9 @@
                    </div>
                  </div>
                </div>';
+			   echo '<br>';
                    break;
+				   
                /* case 'Adresse' :
                   echo $data['Rue'].', '; 
                   echo $data['Ville'].', ';
@@ -211,9 +215,10 @@
                    </div>
                  </div>
                </div>'; 
+			    echo '<br>';
                    break; 
                    
-                  ;       
+                     
    
    
             }
