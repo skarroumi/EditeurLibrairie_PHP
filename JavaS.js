@@ -1,3 +1,5 @@
+
+function CheckChoice(){
  // hide all the divs
     $('div').hide()
 
@@ -8,3 +10,4 @@
         $('div').hide()
         $('#' + this.value).show();
     });
+}

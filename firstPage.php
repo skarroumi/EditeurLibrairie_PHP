@@ -27,7 +27,7 @@
       </div>
       <div class="modal-body">
         
-			<select name="donneeAajouter" id="donneeAajouter">
+			<select name="donneeAajouter" id="donneeAajouter" onchange="CheckChoice()">
 				<option value="Livre">Livre</option>
 				<option value="Auteur">Auteur</option>
 				<option value="Libraire">Libraire</option>
