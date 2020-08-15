@@ -28,7 +28,7 @@
     switch($valeurChoisie)
          {
              case 'Livre' : 
-                $req='SELECT ISBN,Titre FROM livre;'; 
+                $req='SELECT ISBN,Titre,Prize FROM livre;'; 
                 
                 break;
              case 'Auteur' :
@@ -55,7 +55,7 @@
             switch($valeurChoisie)
             { 
                 case 'Livre' :  
-                //  $ife=if(isset($data['Prize']))echo $data['Prize'].'<br>'k;
+               //   $ife=if(isset($data['Prize']))//echo $data['Prize'].'<br>'k;
                 //  $elsee=else echo "ce livre n'a remporté aucun prix <br>";
                  echo $data['Titre'];
                 echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].'">
@@ -117,7 +117,7 @@
                </div>';
                    break;
                 case 'Commande':
-                  echo 'commande :'. $data['CdeCommande'].' '; 
+                  echo 'commande :'.$data['CdeCommande'].' '; 
                  // echo $data['CdeLiraire'].'<br>';
                  // echo $data['Quantité'].'<br>';
                  echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['CdeCommande'].'">
@@ -134,7 +134,7 @@
                        </button>
                      </div>
                      <div class="modal-body">'
-                      .$data['CdeCommande'].'
+                      .'num de commande est : '.$data['CdeCommande'].'<br>la quantité est : '.$data['Quantite'].'
                      </div>
                      <div class="modal-footer">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
