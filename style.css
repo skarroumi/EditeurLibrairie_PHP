@@ -10,3 +10,10 @@
     padding: 50px;
     
 } 
+.roundedB {
+  display: block;
+      height: 100px;
+      width: height;
+      border-radius: width / 2;
+      
+  }
