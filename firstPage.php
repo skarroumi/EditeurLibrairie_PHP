@@ -55,8 +55,8 @@
             switch($valeurChoisie)
             { 
                 case 'Livre' :  
-               //   $ife=if(isset($data['Prize']))//echo $data['Prize'].'<br>'k;
-                //  $elsee=else echo "ce livre n'a remporté aucun prix <br>";
+                  if(isset($data['Prize'])) $Prize=$data['Prize'].'<br>';
+                  else $Prize="ce livre n'a remporté aucun prix <br>";
                  echo $data['Titre'];
                 echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].'">
                  plus de infos
@@ -72,7 +72,7 @@
                        </button>
                      </div>
                      <div class="modal-body">
-                      '.$data['Titre'].'
+                      '.'Titre de livre : '.$data['Titre'].'<br>Prize : '.$Prize.'
                       
                      
                      
@@ -104,7 +104,7 @@
                        </button>
                      </div>
                      <div class="modal-body">'
-                      .$data['Nom'].' '.$data['Prenom'].'
+                      .'Nom complet d\'auteur : '.$data['Nom'].' '.$data['Prenom'].'
                       
                      
                      
