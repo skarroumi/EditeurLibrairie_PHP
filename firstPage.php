@@ -32,10 +32,10 @@
                 
                 break;
              case 'Auteur' :
-                $req="SELECT Nom,Prenom FROM auteur;";
+                $req="SELECT Nom,Prenom,Pseudonyme FROM auteur;";
                 break;
              case 'Commande':
-                $req='SELECT CdeCommande,Quantité FROM commande;';
+                $req='SELECT CdeCommande,Quantite FROM commande;';
                 break;
              case 'Edition' :
                 $req='SELECT NumEdition,Annee,NombreExemplaire,Prix FROM eedition;';
@@ -104,7 +104,7 @@
                        </button>
                      </div>
                      <div class="modal-body">'
-                      .$data['Nom'].'
+                      .$data['Nom'].' '.$data['Prenom'].'
                       
                      
                      
@@ -120,7 +120,7 @@
                   echo 'commande :'. $data['CdeCommande'].' '; 
                  // echo $data['CdeLiraire'].'<br>';
                  // echo $data['Quantité'].'<br>';
-                 echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].'">
+                 echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['CdeCommande'].'">
                  plus de infos
                </button>
                
@@ -146,7 +146,7 @@
                    break;
                 case 'Edition' :
                  // echo $data['NumEdition'].; 
-                  echo 'edition : '.$data['Annee'].'<br>';
+                  echo 'edition : '.$data['Annee'];
                  // echo $data['NombreExemplaire'].'<br>';
                   //echo $data['Prix'].'<br>';
                   echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['NumEdition'].'">
@@ -163,7 +163,7 @@
                        </button>
                      </div>
                      <div class="modal-body">'
-                      .$data['Annee'].'
+                      .'Num de edition: '.$data['NumEdition'].'<br>lannee : '.$data['Annee'].'<br>le prix : '.$data['Prix'].'
                       
                      
                      
@@ -199,7 +199,7 @@
                        </button>
                      </div>
                      <div class="modal-body">'
-                      .$data['Nom'].'
+                      .'Nom de libraire : '.$data['Nom'].'<br>Son code : '.$data['CdeLibraire'].'
                       
                      
                      
