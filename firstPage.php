@@ -10,6 +10,7 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <title>Pas de titre</title>
+        <?php include'connexion.php'; ?>
     </head>
 	
 	<body>
@@ -37,75 +38,81 @@
         <input type="submit" value="mod">
 			<br><br>
 		</form> 	-->	
-      </div>
 
 <?php 
-
       if(isset($_POST['valeurChoisie']))
     {  $choix=$_POST['valeurChoisie'];
-      echo $choix;
       switch($choix)
       {case 'Livre': echo'
-	      <div class="Livre" id="Livre">
-			<label for="ISBN">ISBN<span>*</span></label>
-			<input type="text">
-			<label for="Titre">Titre <span>*</span></label>
-			<input type="text">
-			<label for="Prize">Prix<span>*</span></label>
-			<input type="text">
-      </div>';
+    <div class="Livre" id="Livre">
+      <form action="firstPage.php" method="POST">	
+			ISBN : <input type="text" name="ISBN">
+			Titre : <input type="text" name="Titre">
+      Prize : <input type="text" name="Prize">
+      <input type="submit" value="ajouter" name="ajouter">
+      </form>  
+    </div>';
       break;
-
+      
     //else echo"erreur";
      case 'Auteur' : echo'
     <div class="Auteur" id="Auteur">
-        <label for="Pseudonyme">Pseudonyme<span>*</span></label>
-			<input type="text">
-			<label for="Nom">Nom <span>*</span></label>
-			<input type="text">
-			<label for="Prenom">Prenom<span>*</span></label>
-			<input type="text">         
+      <form action="#" method="POST">
+			Pseudonyme : <input type="text" name="Pseudonyme">
+			Nom : <input type="text" name="Nom">
+      Prenom : <input type="text" name="Prenom">
+      <input type="submit" value="ajouter"  name="ajouter" >
+      </form>       
     </div>';
     break;
 
     case 'Libraire' : echo'
     <div class="Libraire" id="Libraire">
-        <label for="CdeLibraire">Code Libraire<span>*</span></label>
-			<input type="text">
-			<label for="Nom">Nom <span>*</span></label>
-			<input type="text">
-			<label for="CdeAdresse">Code Adresse<span>*</span></label>
-			<input type="text">
+      <form action="#" method="POST">
+			CdeLibraire : <input type="text" name="CdeLibraire">
+			Nom : <input type="text" name="Nom">
+      <input type="submit" value="ajouter"  name="ajouter" >
+      </form>
     </div>';
     break;
 	
-	  case 'Auteur' : echo'
-	<div class="Edition" id="Edition">
-			<label for="NumEdition">Numero d\'edition<span>*</span></label>
-			<input type="text">
-			<label for="Annee">Annee <span>*</span></label>
-			<input type="text">
-			<label for="NombreExemplaire">Nombre d\'exemplaire<span>*</span></label>
-			<input type="text">
-			<label for="Prix">Prix<span>*</span></label>
-			<input type="text">
-			<label for="ISBN">ISBN <span>*</span></label>
-			<input type="text">			
+	  case 'Edition' : echo'
+  <div class="Edition" id="Edition">
+      <form action="#" method="POST">
+			NumEdition :<input type="text" name="NumEdition">
+		  Annee:	<input type="text" name="Annee">
+			NombreExemplaire :<input type="text" name="NombreExemplaire">
+			Prix : <input type="text" nama="Prix">
+      <input type="submit" value="ajouter"  name="ajouter" >
+      </form>		
     </div>';
+     break;
+
+     case 'Commande' : echo'
+     <div class="Commande" id="Commande">
+       <form action="firstPage.php" method="POST">
+       CdeCommande : <input type="text" name="CdeCommande">
+       Quantite : <input type="text" name="Quantite">
+       <input type="submit" value="ajouter"  name="ajouter" >
+       </form>       
+     </div>';
      break;
 
     }
    } else echo'
       <div class="Livre" id="Livre">
+        <form action="#" method="POST">
         <label for="ISBN">ISBN<span>*</span></label>
         <input type="text">
         <label for="Titre">Titre <span>*</span></label>
         <input type="text">
         <label for="Prize">Prix<span>*</span></label>
         <input type="text">
+        </form>
       </div>';
 
-?>	
+?>
+</div>
     <br><br>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -118,14 +125,14 @@
 		<div class="container">
 			<div class="jumbotron">
 				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">
+        
+				<button type="button" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">
 					Ajouter
-				</button>	
-			</div>
-		</div>
+				</button>
 
-		<form action="#" method="POST">
-			<select name="valeurChoisie" id="valeurChoisie">
+
+        <form action="#" method="POST">
+			<select name="valeurChoisie" id="valeurChoisie" >
 				<option value="Livre">Livre</option>
 				<option value="Auteur">Auteur</option>
 				<option value="Libraire">Libraire</option>
@@ -133,14 +140,18 @@
 				<option value="Commande">Commande</option>
 			</select>
 			<br><br>
-			<input type="submit" value="Chercher">
-		</form> 
-<?php include'connexion.php'; ?>
+			<input type="submit" value="Chercher" class="btn btn-primary">
+		    </form>	
+			</div>
+		</div>
+
+
 <?php 
+
     if(isset($_POST['valeurChoisie']))
    { $valeurChoisie=$_POST['valeurChoisie'];
     switch($valeurChoisie)
-         {
+         {   
              case 'Livre' : 
                 $req='SELECT ISBN,Titre,Prize FROM livre;'; 
                 
