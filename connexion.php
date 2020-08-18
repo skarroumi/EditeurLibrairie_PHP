@@ -1,3 +1,4 @@
+<?php// session_start(); ?>
 <?php
 try
 {
@@ -39,8 +40,32 @@ catch (Exception $e)
             {  echo$_POST["Quantite"];
             $req=$bdd->prepare("INSERT INTO Commande(CdeCommande,Quantite) VALUES(?, ?)");
             $req->execute(array($_POST["CdeCommande"],$_POST["Quantite"]));
-            }      
+            }     
+             
       
-    }
+    } 
 
+    
+
+    if(isset($_GET["var"]))
+    {   switch($_SESSION["var"])
+        { case 'Livre' :              
+            $SUP=$_GET["var"];
+            $req=$bdd->exec("DELETE FROM Livre WHERE ISBN=$SUP");  
+        break; 
+         case 'Auteur' :
+            $SUP=$_GET["var"];
+            $req=$bdd->exec("DELETE FROM Auteur WHERE Pseudonyme=$SUP"); 
+         break;
+        case 'Commande' :
+            $SUP=$_GET["var"];
+            $req=$bdd->exec("DELETE FROM Commande WHERE CdeCommande=$SUP"); 
+        break;
+        case 'Libraire' :
+            $SUP=$_GET["var"];
+            $req=$bdd->exec("DELETE FROM Libraire WHERE CdeLibraire=$SUP");   
+        break; 
+
+        }
+    }
 ?>      

@@ -1,3 +1,6 @@
+<?php session_start();
+ 
+ ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,7 +13,9 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
         <title>Pas de titre</title>
-        <?php include'connexion.php'; ?>
+        <?php 
+              include'connexion.php'; 
+        ?>
     </head>
 	
 	<body>
@@ -40,23 +45,25 @@
 		</form> 	-->	
 
 <?php 
+  
       if(isset($_POST['valeurChoisie']))
-    {  $choix=$_POST['valeurChoisie'];
-      switch($choix)
-      {case 'Livre': echo'
-    <div class="Livre" id="Livre">
-      <form action="firstPage.php" method="POST">	
-			ISBN : <input type="text" name="ISBN">
-			Titre : <input type="text" name="Titre">
-      Prize : <input type="text" name="Prize">
-      <input type="submit" value="ajouter" name="ajouter">
-      </form>  
-    </div>';
+        {$choix=$_POST['valeurChoisie'];
+        switch($choix)
+        {case 'Livre': echo'
+       <div class="Livre" id="Livre">
+          <form action="firstPage.php" method="POST">	
+		    	ISBN : <input type="text" name="ISBN">
+		    	Titre : <input type="text" name="Titre">
+          Prize : <input type="text" name="Prize">
+         <input type="submit" value="ajouter" name="ajouter">
+         </form>  
+       </div>';
       break;
       
     //else echo"erreur";
      case 'Auteur' : echo'
-    <div class="Auteur" id="Auteur">
+    
+     <div class="Auteur" id="Auteur">
       <form action="#" method="POST">
 			Pseudonyme : <input type="text" name="Pseudonyme">
 			Nom : <input type="text" name="Nom">
@@ -110,6 +117,8 @@
         <input type="text">
         </form>
       </div>';
+  
+  
 
 ?>
 </div>
@@ -126,7 +135,7 @@
 			<div class="jumbotron">
 				<!-- Button trigger modal -->
         
-				<button type="button" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">
+				<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">
 					Ajouter
 				</button>
 
@@ -140,17 +149,19 @@
 				<option value="Commande">Commande</option>
 			</select>
 			<br><br>
-			<input type="submit" value="Chercher" class="btn btn-primary">
+			<input type="submit" value="Chercher" name="Chercher" class="btn btn-primary">
 		    </form>	
 			</div>
 		</div>
 
 
 <?php 
+      if(isset($_POST["Chercher"]))
+      {if(isset($_POST['valeurChoisie']))
+         { $valeurChoisie=$_POST['valeurChoisie'];  
+          $_SESSION["var"]=$valeurChoisie;
 
-    if(isset($_POST['valeurChoisie']))
-   { $valeurChoisie=$_POST['valeurChoisie'];
-    switch($valeurChoisie)
+         switch($valeurChoisie)
          {   
              case 'Livre' : 
                 $req='SELECT ISBN,Titre,Prize FROM livre;'; 
@@ -175,12 +186,15 @@
           
 
          }
-         $res=$bdd->query($req);
+         $res=$bdd->prepare($req);
+         $res->execute();
          while($data = $res->fetch()){
             switch($valeurChoisie)
             { 
                 case 'Livre' :  
-				
+                  echo $_SESSION["var"];
+                  $data["ISBN"];
+                echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["ISBN"].'\'" class="btn btn-primary" />';                    
                 echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].'">
                  '.$data['Titre'].'
                 </button>
@@ -214,6 +228,8 @@
                 case 'Auteur' :
                   echo $data['Nom'].' '; 
                   echo $data['Prenom']." ";
+                  echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["Pseudonyme"].'\'" class="btn btn-primary" />';
+                  
                   echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['Pseudonyme'].'">
                  plus de infos
                </button>
@@ -244,6 +260,7 @@
 				   
                 case 'Commande':
                   echo 'commande :'.$data['CdeCommande'].' '; 
+                  echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["CdeCommande"].'\'" class="btn btn-primary" />';
                  // echo $data['CdeLiraire'].'<br>';
                  // echo $data['Quantité'].'<br>';
                  echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['CdeCommande'].'">
@@ -275,6 +292,7 @@
                 case 'Edition' :
                  // echo $data['NumEdition'].; 
                   echo 'edition : '.$data['Annee'];
+                  echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["NumEdition"].'\'" class="btn btn-primary" />';
                  // echo $data['NombreExemplaire'].'<br>';
                   //echo $data['Prix'].'<br>';
                   echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['NumEdition'].'">
@@ -314,6 +332,7 @@
                 case 'Libraire':
                   echo $data['CdeLibraire'].' ';
                   echo $data['Nom'].' '; 
+                  echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["CdeLibraire"].'\'" class="btn btn-primary" />';
                   //echo $data['CdeAdress'].'<br>';
                   echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['CdeLibraire'].'">
                  plus de infos
@@ -354,6 +373,8 @@
      
  
       }
+    }
+    
 
 ?>
 
