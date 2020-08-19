@@ -32,23 +32,12 @@
         </button>
       </div>
       <div class="modal-body">
- <!--    <form action="firstPage.php" method="POST">
-			<select name="choix" id="choix">
-				<option value="LivreA">Livre</option>
-				<option value="AuteurA">Auteur</option>
-				<option value="LibraireA">Libraire</option>
-				<option value="EditionA">Edition</option>
-				<option value="CommandeA">Commande</option>
-			</select>
-        <input type="submit" value="mod">
-			<br><br>
-		</form> 	-->	
 
 <?php 
   
-      if(isset($_POST['valeurChoisie']))
-        {$choix=$_POST['valeurChoisie'];
-        switch($choix)
+if(isset($_POST['valeurChoisie']))
+  {$choix=$_POST['valeurChoisie'];
+   switch($choix)
         {case 'Livre': echo'
        <div class="Livre" id="Livre">
           <form action="firstPage.php" method="POST">	
@@ -60,7 +49,6 @@
        </div>';
       break;
       
-    //else echo"erreur";
      case 'Auteur' : echo'
     
      <div class="Auteur" id="Auteur">
@@ -145,7 +133,6 @@
 				<option value="Livre">Livre</option>
 				<option value="Auteur">Auteur</option>
 				<option value="Libraire">Libraire</option>
-				<option value="Edition">Edition</option>
 				<option value="Commande">Commande</option>
 			</select>
 			<br><br>
@@ -159,72 +146,61 @@
       if(isset($_POST["Chercher"]))
       {if(isset($_POST['valeurChoisie']))
          { $valeurChoisie=$_POST['valeurChoisie'];  
-          $_SESSION["var"]=$valeurChoisie;
 
          switch($valeurChoisie)
          {   
              case 'Livre' : 
-                $req='SELECT ISBN,Titre,Prize FROM livre;'; 
-                
+                $req='SELECT l.ISBN, l.Titre ,l.Prize, e.Prix, e.NombreExemplaire, e.Annee, e.NumEdition,a.Pseudonyme, a.Nom, a.Prenom FROM Livre l JOIN eedition e ON (l.ISBN = e.ISBN) JOIN livreauteurpourcentage lv ON (l.ISBN = lv.ISBN)JOIN auteur a ON a.Pseudonyme=lv.Pseudonyme';          
                 break;
              case 'Auteur' :
-                $req="SELECT Nom,Prenom,Pseudonyme FROM auteur;";
+                $req="SELECT l.ISBN, l.Titre ,l.Prize,a.Pseudonyme, a.Nom, a.Prenom FROM auteur a JOIN livreauteurpourcentage lv ON (a.Pseudonyme =lv.Pseudonyme ) JOIN livre l ON (lv.ISBN = l.ISBN);";
                 break;
              case 'Commande':
-                $req='SELECT CdeCommande,Quantite FROM commande;';
-                break;
-             case 'Edition' :
-                $req='SELECT NumEdition,Annee,NombreExemplaire,Prix FROM eedition;';
-                break;
-             case 'Adresse' :
-                $req='SELECT Rue,Ville,Pays FROM adresse;'; 
-                break;  
+                $req='SELECT l.Titre, c.Quantite, c.CdeCommande, li.Nom FROM livre l JOIN commande c ON l.ISBN=c.ISBN JOIN libraire li ON li.CdeLibraire=c.CdeLibraire ;';
+                break; 
              case 'Libraire':
-                $req='SELECT CdeLibraire,Nom,CdeAdresse FROM libraire;';  
+                $req='SELECT a.Rue, a.Ville, a.Pays, l.Nom, l.CdeLibraire FROM libraire l JOIN adresse a ON a.CdeAdresse=l.CdeAdresse ';  
                 break; 
               break; 
-          
-
+             
+ 
          }
-         $res=$bdd->prepare($req);
-         $res->execute();
+        $res=$bdd->prepare($req);
+        $res->execute();
          while($data = $res->fetch()){
             switch($valeurChoisie)
             { 
-                case 'Livre' :  
-                  echo $_SESSION["var"];
-                  $data["ISBN"];
-                echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["ISBN"].'\'" class="btn btn-primary" />';                    
-                echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].'">
-                 '.$data['Titre'].'
+              case 'Livre' :  
+                echo"titre ".$data["Titre"]."<br>";
+                echo"titre ".$data["Nom"]."<br>";
+                echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["ISBN"].$data["Pseudonyme"].'\'" class="btn btn-primary" />';                    
+                echo'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['ISBN'].$data["Pseudonyme"].'">
+                 Affiche plus dinfo
                 </button>
                
-               <div class="modal fade" id="id'.$data['ISBN'].'" tabindex="-1" role="dialog" aria-labelledby="id'.$data['ISBN'].'" aria-hidden="true">
+               <div class="modal fade" id="id'.$data['ISBN'].$data["Pseudonyme"].'" tabindex="-1" role="dialog" aria-labelledby="id'.$data['ISBN'].$data["Pseudonyme"].'" aria-hidden="true">
                  <div class="modal-dialog" role="document">
                    <div class="modal-content">
                      <div class="modal-header">
-                       <h5 class="modal-title" id="id'.$data['ISBN'].'">Informations completes</h5>
+                       <h5 class="modal-title" id="id'.$data['ISBN'].$data["Pseudonyme"].'">Informations completes</h5>
                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                          <span aria-hidden="true">Livre</span>
                        </button>
-                     </div>
-					 
+                     </div>				 
                      <div class="modal-body">
-                      '.$data['ISBN'].'
-					  '.$data['Titre'].'
-					  '.$data['Prize'].'                 
-                     </div>
-					 
+                     Titre de livre : '.$data["Titre"].'<br>
+                     Non et prenom de l\'auteur : '.$data["Nom"].' '.$data["Prenom"].'<br>
+                     Nombre d\'exmplaire :'.$data["NombreExemplaire"].'<br>'.'Prix du livre : '. $data["Prix"].'<br>
+                      Numero d\'edition : '.$data["NumEdition"].'<br>
+                       Annee d\'édition : '.$data["Annee"].'<br>
+                     </div>					 
                      <div class="modal-footer">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">Retourner</button>                   
                      </div>
-					 
                    </div>
                  </div>
                </div>'; 
-                   echo '<br>';
                    break;
-				   
                 case 'Auteur' :
                   echo $data['Nom'].' '; 
                   echo $data['Prenom']." ";
@@ -243,11 +219,8 @@
                          <span aria-hidden="true">Auteur</span>
                        </button>
                      </div>
-                     <div class="modal-body">'
-                      .$data['Nom'].' '.$data['Prenom'].'
-                      
-                     
-                     
+                     <div class="modal-body">
+                     Nom et prenom de l\'auteur : '.$data["Nom"]." ".$data["Prenom"].'<br>Ses livres : '.$data["Titre"].'<br>
                      </div>
                      <div class="modal-footer">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -276,8 +249,8 @@
                          <span aria-hidden="true">Commande</span>
                        </button>
                      </div>
-                     <div class="modal-body">'
-                      .'num de commande est : '.$data['CdeCommande'].'<br>la quantité est : '.$data['Quantite'].'
+                     <div class="modal-body">
+                      Num de commande est : '.$data['CdeCommande'].'<br>la quantité est : '.$data["Quantite"].'<br> Titre de Livre : '.$data["Titre"].'<br> Le libraire qui a effectué la commande : '.$data["Nom"].'
                      </div>
                      <div class="modal-footer">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -288,47 +261,7 @@
                </div>';
 			   echo '<br>';
                    break;
-				   
-                case 'Edition' :
-                 // echo $data['NumEdition'].; 
-                  echo 'edition : '.$data['Annee'];
-                  echo'<input type="button" value="Supprimer" onclick="window.location.href=\'firstPage.php?var='. $data["NumEdition"].'\'" class="btn btn-primary" />';
-                 // echo $data['NombreExemplaire'].'<br>';
-                  //echo $data['Prix'].'<br>';
-                  echo'      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id'.$data['NumEdition'].'">
-                 plus de infos
-               </button>
-               
-               <div class="modal fade" id="id'.$data['NumEdition'].'" tabindex="-1" role="dialog" aria-labelledby="id'.$data['NumEdition'].'" aria-hidden="true">
-                 <div class="modal-dialog" role="document">
-                   <div class="modal-content">
-                     <div class="modal-header">
-                       <h5 class="modal-title" id="id'.$data['NumEdition'].'">Informations completes</h5>
-                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                         <span aria-hidden="true">Edition</span>
-                       </button>
-                     </div>
-                     <div class="modal-body">'
-                      .'Num de edition: '.$data['NumEdition'].'<br>lannee : '.$data['Annee'].'<br>le prix : '.$data['Prix'].'
-                      
-                     
-                     
-                     </div>
-                     <div class="modal-footer">
-                       <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                       
-                     </div>
-                   </div>
-                 </div>
-               </div>';
-			   echo '<br>';
-                   break;
-				   
-               /* case 'Adresse' :
-                  echo $data['Rue'].', '; 
-                  echo $data['Ville'].', ';
-                  echo $data['Pays'].'<br>'; 
-                   break;  */
+
                 case 'Libraire':
                   echo $data['CdeLibraire'].' ';
                   echo $data['Nom'].' '; 
@@ -348,10 +281,7 @@
                        </button>
                      </div>
                      <div class="modal-body">'
-                      .'Nom de libraire : '.$data['Nom'].'<br>Son code : '.$data['CdeLibraire'].'
-                      
-                     
-                     
+                      .'Nom de libraire : '.$data['Nom'].'<br>Son code : '.$data['CdeLibraire'].'<br> Son adresse : '.$data["Rue"].', '.$data["Ville"].', '.$data["Pays"].'
                      </div>
                      <div class="modal-footer">
                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
