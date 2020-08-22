@@ -174,7 +174,7 @@
                         <!-- LE COEUR DE LA PAGE: -->
     <div class="entete">
       <div class="logo text-center"><img src="./img/logo.png"></div>
-      <div class="titre h3 text-center">BIENVENUE SUR VOTRE ESPACE DE TRAVAIL</div>
+      <div class="titre h2 text-center">BIENVENUE SUR VOTRE ESPACE DE TRAVAIL</div>
       <div><div class="deconnexion"><a href="./index.html"><i class="fa fa-sign-out" aria-hidden="true"></i></a></div></div>
     </div>
 
@@ -182,7 +182,7 @@
       <div class="image h-100 w-100"><img src="./img/library.jpg"></div>
       <div class="top">
         <div class="container">
-          <div class="row pt-3 mt-2">
+          <div class="row pt-4 mt-3">
             <div class="col-9">
               <form method="POST" action="#">
                 <div class="row">

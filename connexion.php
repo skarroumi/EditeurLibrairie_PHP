@@ -19,18 +19,21 @@ catch (Exception $e)
 
 //AUTHENTIFICATION
 
-if(isset($_POST["log"]) && !empty($_POST['login']))
-{if(isset($_POST['login']) && isset($_POST['password']) && !empty($_POST['login'] && $_POST['password']))
+
+if(isset($_POST['log']))
    {
        $req=$bdd->prepare("SELECT * FROM user WHERE login = ? AND password = ? ");
        $req->execute(array($_POST['login'],$_POST['password']));
+       echo$_POST['login'];
        $cpt=$req->rowCount();
-       if($cpt==1) header("Location: firstPage.php ");
-       else echo"Mauvais login ou mdp";
-  }  else echo"veuillez remplir tout les champs";
+       if($cpt==1) header("Location: dashboard.php "); 
+       else 
+        header("Location: index.php "); 
+    } 
+ 
 
     
-}
+
 
                   //INSERTION
 

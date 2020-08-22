@@ -14,7 +14,7 @@
   </head> 
   <body>
 
-  <?php include 'connexion.php' ?>
+  <?php  include'connexion.php';  ?>
 
     <!-- les modals ici: -->
     <div class="modal fade modalCss" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,7 +64,7 @@
           <div class="row">
             <div class="col-12 connexion">
               <h1 class="titleL title-form mt-3 pb-3" style="color: #111; font-family: 'Advent Pro';">SE CONNECTER</h1>
-              <form  method="POST" action="dashboard.php">
+              <form  method="POST" action="connexion.php">
                 <div class="input-group input-group-lg mb-3">
                   <input type="text" name="login" class="form-control input_pass" value="" placeholder="Email" required>
                 </div>

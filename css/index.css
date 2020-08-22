@@ -37,7 +37,7 @@ html, body {
 }
 .entete > .titre {
     position: absolute;;
-    top: 19px;
+    top: 0px;
     width: 100%;
     font-family: 'Advent Pro';
     font-weight: bolder;
@@ -117,6 +117,7 @@ table th{
     font-family: 'Advent Pro';
 }
 table tr {
+    font-size: 16px;
     border-top: 2px solid rgb(153, 85, 17);
 }
 /* modal */
