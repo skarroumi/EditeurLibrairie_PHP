@@ -1,32 +1,16 @@
 <?php
-try
-{
-    $bdd = new PDO('mysql:host=localhost;port=3308;dbname=editeurbdd;charset=utf8', 'root', '');
-   
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
-}
-
-?>
-
-
-
-
-<?php 
-
-
-//AUTHENTIFICATION
-
-
+include 'SQLConnexion.php';
 if(isset($_POST['log']))
    {
        $req=$bdd->prepare("SELECT * FROM user WHERE login = ? AND password = ? ");
        $req->execute(array($_POST['login'],$_POST['password']));
-       echo$_POST['login'];
        $cpt=$req->rowCount();
-       if($cpt==1) header("Location: dashboard.php "); 
+       if($cpt==1) {
+            session_start();
+            $valeurChoisie = 'Livre';
+            $_SESSION['valeurChoisie'] = $valeurChoisie;
+           header("Location:dashboard.php"); 
+       }
        else 
         header("Location: index.php "); 
     } 

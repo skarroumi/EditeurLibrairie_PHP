@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+$valeurChoisieDefaut = $_SESSION['valeurChoisie'];
+?>
 <!doctype html>
 <html>
   <head>
@@ -38,8 +40,12 @@
           <div class="modal-body">
   <!--  COEUR DE POP UP de l'insertion: -->
  <?php 
+
     if(isset($_POST['valeurChoisie']))
-    { $choix=$_POST['valeurChoisie'];
+      $choix=$_POST['valeurChoisie'];
+      else {
+        $choix = $valeurChoisieDefaut;
+      }
       switch($choix)
       { case 'Livre': ?> <!-- LIVRE: -->
             <form method="POST" action="#" >
@@ -165,7 +171,7 @@
                 </div>
                 <button type="submit" class="btn bt-primary" name="ajouter"><i class="fa fa-plus pr-2" aria-hidden="true"></i> Ajouter</button>
               </form>
-        <?php break; } } ?>
+        <?php break; }  ?>
           </div>
         </div>
       </div>
@@ -175,7 +181,7 @@
     <div class="entete">
       <div class="logo text-center"><img src="./img/logo.png"></div>
       <div class="titre h2 text-center">BIENVENUE SUR VOTRE ESPACE DE TRAVAIL</div>
-      <div><div class="deconnexion"><a href="./index.html"><i class="fa fa-sign-out" aria-hidden="true"></i></a></div></div>
+      <div><div class="deconnexion"><a href="./index.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a></div></div>
     </div>
 
     <div class="page">
@@ -201,31 +207,25 @@
               </form>
             </div>
 <!-- BOUTTON AJOUTER:////////////////////////////////////////////////////// -->
-            <div class="col-3">
+            <div class="col-2">
               <button type="button"  data-toggle="modal" data-target="#exampleModal" class="btn bt-primary mb-2" style="float: right;"><i class="fa fa-plus pr-2" aria-hidden="true"></i> Ajouter</button>
             </div>
           </div>
         </div>
       </div>
       <div class="bottom">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">Info</th>
-              <th scope="col">Info 1</th>
-              <th scope="col">Info 2</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
+ 
           
  <!-- RWINNNAAA AFFICHAGE DINFORMATIONS ET SUPPRESSION: -->         
             
      <?php 
-if(isset($_POST["Chercher"]))
-{
-  if(isset($_POST['valeurChoisie']))
-  {
-    $valeurChoisie=$_POST['valeurChoisie'];  
+    if (isset($_POST['Chercher'])){
+      $valeurChoisie=$_POST['valeurChoisie'];
+    }
+    else {
+      $valeurChoisie = $valeurChoisieDefaut;
+    }
+      
     $_SESSION["var"]=$valeurChoisie;
 
     switch($valeurChoisie)
@@ -245,22 +245,32 @@ if(isset($_POST["Chercher"]))
               break; 
 
           }  
-  }
+  
 
     $res=$bdd->prepare($req);
     $res->execute();
-      while($data = $res->fetch())
-  { switch($valeurChoisie)
-    { 
-        case 'Livre' : ?>
+          $HEADROW = 1;
+      while($data = $res->fetch()){ 
+        switch($valeurChoisie){ 
+        case 'Livre' : 
+        if ($HEADROW == 1){ ?>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">ISBN</th>
+              <th scope="col">Auteur</th>
+              <th scope="col">Titre</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <?php $HEADROW++; 
+        } ?>
           <tbody> 
               <tr>
               <td class="pt-3"><?php echo $data["ISBN"]; ?></td>
               <td class="pt-3"><?php echo $data["Nom"]." ".$data["Prenom"];?></td>
               <td class="pt-3"><?php echo$data["Titre"];?></td>
               <td class="pt-2" style="float: right;">
-
-          
            <?php 
           echo
             '<button type="button" class="btn bt-primary mr-2" data-toggle="modal" data-target="#id'.$data['ISBN'].$data["Pseudonyme"].'"><i class="fa fa-eye pr-2" aria-hidden="true"></i>Consulter
@@ -298,7 +308,19 @@ if(isset($_POST["Chercher"]))
           </tbody> 
         <?php 
         break; 
-        case 'Auteur' : ?>
+        case 'Auteur' : 
+          if ($HEADROW == 1){ ?>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Prenom</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Pseudonyme</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <?php $HEADROW++; 
+        } ?>
           <tbody> 
               <tr>
               <td class="pt-3"><?php echo$data["Prenom"]; ?></td>
@@ -340,7 +362,18 @@ if(isset($_POST["Chercher"]))
         <?php 
         break;  
 
-        case 'Libraire' : ?>
+        case 'Libraire': 
+          if ($HEADROW == 1){ ?>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Code Libraire</th>
+                  <th scope="col">Nom</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <?php $HEADROW++; 
+            } ?>
           <tbody> 
               <tr>
               <td class="pt-3"><?php echo$data["CdeLibraire"]; ?></td>
@@ -381,7 +414,18 @@ if(isset($_POST["Chercher"]))
         <?php 
         break; 
 
-        case 'Commande' : ?>
+        case 'Commande' : 
+          if ($HEADROW == 1){ ?>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Code Commande</th>
+                  <th scope="col">Titre</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <?php $HEADROW++; 
+            } ?>
           <tbody> 
               <tr>
               <td class="pt-3"><?php echo$data["CdeCommande"]; ?></td>
@@ -423,13 +467,13 @@ if(isset($_POST["Chercher"]))
        break;
     }
   }
-} ?>
+ ?>
         </table>
       </div>
     </div>
 
 
-  </body>     
+  </body> 
 </html>
 
      
