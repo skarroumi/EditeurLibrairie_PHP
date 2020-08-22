@@ -64,7 +64,7 @@
           <div class="row">
             <div class="col-12 connexion">
               <h1 class="titleL title-form mt-3 pb-3" style="color: #111; font-family: 'Advent Pro';">SE CONNECTER</h1>
-              <form  method="POST" action="./dashboard.html">
+              <form  method="POST" action="dashboard.php">
                 <div class="input-group input-group-lg mb-3">
                   <input type="text" name="login" class="form-control input_pass" value="" placeholder="Email" required>
                 </div>

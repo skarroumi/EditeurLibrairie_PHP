@@ -8,11 +8,11 @@ catch (Exception $e)
 {
         die('Erreur : ' . $e->getMessage());
 }
-<<<<<<< Updated upstream
-?>
-=======
 
 ?>
+
+
+
 
 <?php 
 
@@ -98,4 +98,4 @@ if(isset($_POST['ajouter']))
         }
     }
 ?>      
->>>>>>> Stashed changes
+
