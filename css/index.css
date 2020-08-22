@@ -1,0 +1,125 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+/* login */
+.page > .index {
+    position: absolute;
+    top: 150px;
+    padding: 20px;
+    width: 30%;
+    left: 35%;
+    margin: 0;
+    background-color: rgba(255, 255, 255, .8);
+    border-radius: 5px;
+    border: 3px solid rgb(255, 255, 255);
+}
+
+
+/* dashboard */
+.entete {
+    position: absolute;
+    height: 80px;
+    width: 100%;
+    background-color: rgba(153, 85, 17, 0.2);
+    border-bottom: 5px solid rgb(0, 0, 0);
+}
+.entete > div > .deconnexion > a {
+    position: absolute;
+    margin-top: 12px;
+    font-size: 35px;
+    right: 20px;
+    color: rgb(153, 85, 17);
+}
+.entete > div > .deconnexion > a:hover {
+    opacity: .5;
+}
+.entete > .titre {
+    position: absolute;;
+    top: 19px;
+    width: 100%;
+    font-family: 'Advent Pro';
+    font-weight: bolder;
+    color: rgb(153, 85, 17);
+}
+.entete > .logoIndex {
+    position: absolute;
+    top: 19px;
+    width: 100%;
+}
+.entete > .logo {
+    position: absolute;
+    left: 20px;
+    top: 19px;
+}
+.entete > .logo > img , .entete > .logoIndex > img {
+    height: 40px;
+}
+/* page */
+.page{
+    position: absolute;
+    height: calc(100% - 80px);
+    top: 80px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-color: rgba(153, 85, 17, .5);
+}
+.page > .image > img {
+    height: 100%;
+    width: 100%;
+    opacity: .5;
+}
+.page > .top, .page > .bottom  {
+    position: absolute;
+    width: 80%;
+    left: 10%;
+    margin: 0;
+    background-color: rgba(255, 255, 255, .8);
+    border-radius: 5px;
+    border: 3px solid rgb(255, 255, 255);
+}
+.page > .top {
+    height: 90px;
+    top: 30px;
+}
+.page > .bottom  {
+    height: calc(100% - 180px);
+    top: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}
+.bt-secondary {font-family: 'Advent Pro';}
+.bt-primary {
+    background-color: rgb(153, 85, 17);
+    border: 1px solid rgb(153, 85, 17);
+    color: rgb(255, 255, 255);
+    font-family: 'Advent Pro';
+}
+.bt-primary:hover {
+    background-color: rgba(200, 100, 0);
+    border: 1px solid rgb(153, 85, 17);
+    color: rgb(255, 255, 255);
+}
+table {
+    width: 100%;
+    height: 100px;
+    overflow-y: auto;
+    background-color: rgb(255, 255, 255);
+}
+table th{
+    position: sticky; 
+    top: 0;
+    background-color: rgb(153, 85, 17);
+    color: #fff;
+    font-family: 'Advent Pro';
+}
+table tr {
+    border-top: 2px solid rgb(153, 85, 17);
+}
+/* modal */
+.modalCss {
+    top: 110px;
+}
