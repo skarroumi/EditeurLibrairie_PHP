@@ -5,18 +5,15 @@ if(isset($_POST['log']))
        $req=$bdd->prepare("SELECT * FROM user WHERE login = ? AND password = ? ");
        $req->execute(array($_POST['login'],$_POST['password']));
        $cpt=$req->rowCount();
-       if($cpt==1) {
+       if($cpt) {
             session_start();
-            $valeurChoisie = 'Livre';
-            $_SESSION['valeurChoisie'] = $valeurChoisie;
-           header("Location:dashboard.php"); 
+            $_SESSION['valeurChoisie'] = 'Livre';
+            $_SESSION['userLogin'] = 'TRUE';
+            header("Location:dashboard.php"); 
        }
        else 
         header("Location: index.php "); 
     } 
- 
-
-    
 
 
                   //INSERTION
@@ -56,33 +53,5 @@ if(isset($_POST['ajouter']))
             $req->execute(array($_POST["CdeCommande"],$_POST["Quantite"],$_POST['TitreC'],$_POST['libraireC']));
     }         
  } 
-
-
-    
-
-    if(isset($_GET["var"]))
-    {   switch($_SESSION["var"])
-        { case 'Livre' :              
-            $SUP=$_GET["var"];
-            $req=$bdd->exec("DELETE FROM Livre WHERE ISBN=$SUP");
-            $req=$bdd->exec("DELETE FROM eedition WHERE ISBN=$SUP"); 
-            $req=$bdd->exec("DELETE FROM livreauteurpourcentage WHERE ISBN=$SUP");   
-        break; 
-         case 'Auteur' :
-            $SUP=$_GET["var"];
-            $req=$bdd->exec("DELETE FROM Auteur WHERE Pseudonyme=$SUP");
-            $req=$bdd->exec("DELETE FROM livreauteurpourcentage WHERE Pseudonyme=$SUP"); 
-         break;
-        case 'Commande' :
-            $SUP=$_GET["var"];
-            $req=$bdd->exec("DELETE FROM Commande WHERE CdeCommande=$SUP"); 
-        break;
-        case 'Libraire' :
-            $SUP=$_GET["var"];
-            $req=$bdd->exec("DELETE FROM Libraire WHERE CdeLibraire=$SUP");   
-        break; 
-
-        }
-    }
 ?>      
 

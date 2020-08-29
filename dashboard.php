@@ -1,11 +1,15 @@
-<?php session_start(); 
+<?php session_start();
+if(empty($_SESSION['userLogin']=='TRUE')){
+  header("Location: index.php");
+  die();
+}
 $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
 ?>
 <!doctype html>
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Gestion d’un éditeur</title>
+    <title>Projet Editeur | Accueil</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -302,7 +306,7 @@ $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
                </div>';
 
           echo
-            '<button type="button" onclick="window.location.href=\'dashboard.php?var='. $data["ISBN"].'\'" class="btn bt-primary mr-2" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>'; ?>
+            '<button type="button" id="'.$data["ISBN"].'" class="btn bt-primary mr-2 btnD" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>'; ?>
 
               </td> 
             </tr>
@@ -356,7 +360,7 @@ $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
               </div>'; 
 
             echo
-               '<button type="button" onclick="window.location.href=\'dashboard.php?var='. $data["Pseudonyme"].'\'" class="btn bt-primary mr-2" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>' ?>
+               '<button type="button" id="'.$data["Pseudonyme"].'" class="btn bt-primary mr-2 btnD" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>' ?>
               </td> 
             </tr>
           </tbody>
@@ -408,7 +412,7 @@ $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
                 </div>
               </div>'; 
               echo
-                 '<button type="button" onclick="window.location.href=\'dashboard.php?var='. $data["CdeLibraire"].'\'" class="btn bt-primary mr-2" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>' ?>
+                 '<button type="button" id="'.$data["CdeLibraire"].'" class="btn bt-primary mr-2 btnD" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>' ?>
               </td> 
             </tr>
           </tbody> 
@@ -460,7 +464,7 @@ $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
                 </div>
               </div>'; 
             echo
-                '<button type="button" onclick="window.location.href=\'dashboard.php?var='. $data["CdeCommande"].'\'" class="btn bt-primary mr-2" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>' ?>
+                '<button type="button" id="'.$data["CdeCommande"].'" class="btn bt-primary mr-2 btnD" /><i class="fa fa-trash pr-2" aria-hidden="true"></i>Supprimer</button>' ?>
               </td> 
             </tr>
           </tbody>
@@ -476,5 +480,35 @@ $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
 
   </body> 
 </html>
+
+<script>
+$(document).ready(function(){
+  $('.btnD').click(function(){
+    var el = this;
+    var deleteType = '<?php echo $_SESSION["var"]; ?>';
+    var deleteValue = this.id;
+
+    $.ajax({
+      method: "POST",
+      url: "suppression.php",
+      data: {type:deleteType, value:deleteValue},
+      success:function(response){
+        if(response == 1){
+	        // Remove row from HTML Table
+	        $(el).closest('tr').css('background','tomato');
+	        $(el).closest('tr').fadeOut(800,function(){
+	          $(this).remove();
+	        });
+          }
+        else{
+	        alert('Echec de Suppression');
+          }
+      }
+      
+    });
+    
+  });
+});
+</script>
 
      
