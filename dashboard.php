@@ -199,11 +199,24 @@ $valeurChoisieDefaut = $_SESSION['valeurChoisie'];
                 <div class="row">
                   <div class="col">
                     <select name="valeurChoisie" id="valeurChoisie" class="form-control">
-				            <option value="Livre">Livre</option>
-				            <option value="Auteur">Auteur</option>
-			            	<option value="Libraire">Libraire</option>
-			            	<option value="Commande">Commande</option>
+				            <option value="Livre"<?php if(isset($_POST['valeurChoisie']) && $_POST['valeurChoisie'] == 'Auteur') 
+         echo 'selected= "selected"';
+          ?>
+      >Livre</option>
+      <option value="Auteur"<?php if(isset($_POST['valeurChoisie']) && $_POST['valeurChoisie'] == 'Auteur') 
+         echo 'selected= "selected"';
+          ?>
+      >Auteur</option>
+      <option value="Libraire"<?php if(isset($_POST['valeurChoisie']) && $_POST['valeurChoisie'] == 'Libraire') 
+         echo 'selected= "selected"';
+          ?>
+      >Libraire</option>
+      <option value="Commande"<?php if(isset($_POST['valeurChoisie']) && $_POST['valeurChoisie'] == 'Commande') 
+         echo 'selected= "selected"';
+          ?>
+      >Commande</option>
                     </select>
+                    
                   </div>
                   <div class="col">
                     <button type="submit" class="btn bt-primary"  name="Chercher"><i class="fa fa-search pr-2" aria-hidden="true" name="Chercher"></i> Chercher</button>
@@ -510,5 +523,6 @@ $(document).ready(function(){
   });
 });
 </script>
+
 
      
